@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Nuestro Jardín ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300;1,9..144,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --cream2: #EDE6D8;
+  --warm: #FFFDF8;
+  --sage: #7A9E7E;
+  --sage-l: #C0D8C2;
+  --sage-d: #3A6A3E;
+  --lila: #A078B8;
+  --lila-l: #DDD0EE;
+  --terra: #C07850;
+  --terra-l: #EDD8C8;
+  --gold: #C8A840;
+  --gold-l: #F0E0B0;
+  --rose: #C07888;
+  --rose-l: #F0D0D8;
+  --sky: #5890B0;
+  --sky-l: #C8E0F0;
+  --text: #2C1F0E;
+  --muted: #8A7460;
+  --border: #D8CEB8;
+  --card: rgba(255,253,248,0.92);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text)}
+a{color:inherit;text-decoration:none}
+
+/* SCREENS */
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+.screen.active{display:flex}
+
+/* ══════════════ LOGIN ══════════════ */
+#s-login{
+  background: var(--cream);
+  align-items:center;justify-content:center;
+  padding:32px 24px;
+  gap:0;
+}
+.login-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(160,120,184,.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(122,158,126,.15) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(200,168,64,.08) 0%, transparent 60%);
+  pointer-events:none;
+}
+.login-stars{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.4;animation:twinkle var(--d,3s) ease-in-out infinite var(--delay,0s)}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:.8;transform:scale(1.3)}}
+.login-title{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:36px;color:var(--text);text-align:center;margin-bottom:6px;position:relative}
+.login-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:36px;position:relative}
+.login-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:24px;padding:28px 24px;width:100%;max-width:320px;
+  position:relative;
+  box-shadow:0 4px 32px rgba(44,31,14,.06);
+}
+.login-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.login-input{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--border);border-radius:12px;
+  background:var(--warm);font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);
+  margin-bottom:16px;outline:none;transition:border-color .2s;
+}
+.login-input:focus{border-color:var(--lila)}
+.login-btn{
+  width:100%;padding:13px;border:none;border-radius:14px;
+  font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;transition:transform .15s,opacity .15s;
+  margin-bottom:10px;
+}
+.login-btn:active{transform:scale(.97)}
+.btn-cosmos{background:linear-gradient(135deg,#8858A8,#A878C8);color:white}
+.btn-terra{background:linear-gradient(135deg,#5A8A5A,#7AAE7A);color:white}
+.login-err{font-size:12px;color:#C04040;text-align:center;min-height:18px;margin-top:4px}
+.login-hint{font-size:10px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
+
+/* ══════════════ MAIN LAYOUT ══════════════ */
+#s-main{background:var(--cream)}
+.topbar{
+  padding:14px 18px 10px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+  border-bottom:1px solid var(--border);
+  background:var(--cream);
+}
+.topbar-title{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:20px;color:var(--text)}
+.topbar-user{display:flex;align-items:center;gap:8px}
+.user-pill{
+  font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;
+  cursor:pointer;
+}
+.pill-cosmos{background:var(--lila-l);color:#5A3888}
+.pill-terra{background:var(--sage-l);color:var(--sage-d)}
+.pill-shared{background:var(--gold-l);color:#7A5800}
+.logout-btn{font-size:11px;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:8px;border:0.5px solid var(--border)}
+
+/* TABS */
+.tabs{display:flex;padding:10px 16px 0;gap:6px;flex-shrink:0;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex-shrink:0;font-size:12px;font-weight:700;padding:7px 14px;
+  border-radius:20px;border:1.5px solid transparent;
+  cursor:pointer;transition:all .2s;color:var(--muted);
+  background:transparent;white-space:nowrap;
+}
+.tab.active{color:var(--text);border-color:var(--border);background:var(--warm)}
+
+/* SCROLL CONTENT */
+.content{flex:1;overflow-y:auto;padding:14px 16px 80px;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+
+/* ANIMAL CARD */
+.animal-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:22px;overflow:hidden;margin-bottom:18px;
+  box-shadow:0 2px 16px rgba(44,31,14,.05);
+}
+.animal-img-wrap{position:relative;width:100%;height:200px;background:var(--cream2);overflow:hidden;cursor:pointer}
+.animal-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.animal-img-placeholder{
+  width:100%;height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(160deg,var(--cream) 0%,var(--cream2) 100%);
+}
+.animal-emoji-big{font-size:64px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.1));animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.img-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.0);
+  display:flex;align-items:flex-end;padding:10px;
+  justify-content:space-between;
+}
+.img-cat-pill{
+  font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.5);
+  background:rgba(245,240,232,.85);color:var(--muted);
+  backdrop-filter:blur(4px);
+}
+.img-change-btn{
+  font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;
+  background:rgba(245,240,232,.85);color:var(--muted);
+  border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(4px);cursor:pointer;
+}
+.animal-body{padding:14px 16px 16px}
+.animal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.animal-name{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:20px;color:var(--text)}
+.animal-tagline{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* MOOD SELECTOR */
+.mood-row{display:flex;gap:5px;align-items:center}
+.mood-face{
+  width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);
+  background:var(--warm);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .18s;font-size:0;
+}
+.mood-face:hover{transform:scale(1.15)}
+.mood-face.sel{border-color:var(--sage);background:var(--sage-l);transform:scale(1.2)}
+.mood-face svg{width:18px;height:18px}
+
+/* PROGRESS */
+.prog-row{display:flex;align-items:center;gap:8px;margin:10px 0}
+.prog-bar{flex:1;height:6px;background:var(--cream2);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;transition:width .4s ease}
+.prog-label{font-size:10px;color:var(--muted);white-space:nowrap}
+
+/* TASKS */
+.tasks-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.task-item{
+  display:flex;align-items:center;gap:9px;
+  padding:8px 10px;border-radius:11px;
+  background:rgba(255,253,248,.8);border:0.5px solid var(--border);
+  margin-bottom:6px;cursor:pointer;transition:background .15s;
+}
+.task-item:hover{background:var(--warm)}
+.task-cb{
+  width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.task-cb.done{background:var(--sage);border-color:var(--sage)}
+.task-cb.done::after{content:'';display:block;width:5px;height:8px;border:2px solid white;border-top:none;border-left:none;transform:rotate(42deg) translate(0px,-1px)}
+.task-txt{font-size:12px;color:var(--text);flex:1;line-height:1.3}
+.task-txt.done{text-decoration:line-through;color:var(--muted)}
+.task-add-row{display:flex;gap:8px;margin-top:8px}
+.task-add-inp{
+  flex:1;padding:8px 12px;border:1px dashed var(--border);border-radius:10px;
+  background:transparent;font-family:'Nunito',sans-serif;font-size:12px;color:var(--text);outline:none;
+}
+.task-add-inp::placeholder{color:var(--muted)}
+.task-add-inp:focus{border-color:var(--sage);border-style:solid}
+.task-add-btn{
+  padding:8px 12px;border:none;border-radius:10px;background:var(--sage);
+  color:white;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;
+}
+
+/* PADLET BOARD */
+.board-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+.board-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.board-card{
+  border-radius:14px;border:1px solid var(--border);overflow:hidden;
+  background:var(--warm);position:relative;cursor:pointer;min-height:80px;
+  display:flex;flex-direction:column;
+}
+.board-card-img{width:100%;height:80px;object-fit:cover;display:block}
+.board-card-body{padding:8px;flex:1}
+.board-card-type{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.board-card-text{font-size:11px;color:var(--text);line-height:1.4;word-break:break-word}
+.board-card-link{font-size:10px;color:var(--sky);word-break:break-all}
+.board-card-del{
+  position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;
+  background:rgba(0,0,0,.25);color:white;font-size:11px;line-height:18px;text-align:center;
+  cursor:pointer;display:none;
+}
+.board-card:hover .board-card-del{display:block}
+.board-add-btn{
+  border-radius:14px;border:1.5px dashed var(--border);min-height:80px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;cursor:pointer;background:transparent;
+  color:var(--muted);font-size:11px;font-weight:600;transition:background .15s;
+}
+.board-add-btn:hover{background:rgba(255,253,248,.8)}
+.board-add-icon{font-size:22px;line-height:1}
+
+/* ADD MODAL */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(44,31,14,.4);
+  display:none;align-items:flex-end;justify-content:center;z-index:100;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--cream);border-radius:24px 24px 0 0;
+  padding:20px 20px 36px;width:100%;max-width:480px;
+  animation:slideup .25s ease;
+}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-title{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:18px;color:var(--text);margin-bottom:16px}
+.modal-tabs{display:flex;gap:8px;margin-bottom:16px}
+.modal-tab{
+  flex:1;padding:8px;border-radius:10px;border:1.5px solid var(--border);
+  font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;text-align:center;
+  background:transparent;transition:all .15s;
+}
+.modal-tab.active{border-color:var(--lila);background:var(--lila-l);color:#5A3888}
+.modal-inp{
+  width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:12px;
+  background:var(--warm);font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);
+  outline:none;margin-bottom:10px;transition:border-color .2s;
+}
+.modal-inp:focus{border-color:var(--lila)}
+.modal-save{
+  width:100%;padding:13px;border:none;border-radius:14px;
+  background:var(--lila);color:white;font-family:'Nunito',sans-serif;
+  font-size:15px;font-weight:700;cursor:pointer;
+}
+.modal-cancel{
+  width:100%;padding:10px;border:none;background:transparent;
+  font-family:'Nunito',sans-serif;font-size:13px;color:var(--muted);cursor:pointer;margin-top:6px;
+}
+
+/* SHARED CATS SPECIAL */
+.shared-banner{
+  background:linear-gradient(135deg,var(--gold-l),var(--lila-l));
+  border:1px solid var(--gold);border-radius:16px;padding:12px 14px;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.shared-banner-text{font-size:12px;color:#5A4A00;line-height:1.5}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--cream);border-top:1px solid var(--border);
+  display:flex;padding:8px 0 16px;z-index:50;
+}
+.nav-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;padding:4px 0;
+}
+.nav-icon{font-size:20px;transition:transform .2s}
+.nav-label{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.nav-btn.active .nav-icon{transform:scale(1.2)}
+.nav-btn.active .nav-label{color:var(--text)}
+
+/* CYCLE CARD */
+.cycle-card{background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;margin-bottom:18px}
+.cycle-body{padding:16px}
+.cycle-title{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:20px;color:var(--text);margin-bottom:4px}
+.cycle-phases{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.phase-btn{
+  padding:10px 8px;border-radius:14px;border:1.5px solid var(--border);
+  background:var(--warm);text-align:center;cursor:pointer;transition:all .2s;
+}
+.phase-btn.sel{border-width:2px}
+.phase-icon{font-size:22px;margin-bottom:3px}
+.phase-name{font-size:11px;font-weight:700;color:var(--text)}
+.phase-desc{font-size:9px;color:var(--muted);line-height:1.4;margin-top:2px}
+.phase-menstrual.sel{border-color:#C04060;background:#FDE8EC}
+.phase-folicular.sel{border-color:#D4A840;background:#FEF6E0}
+.phase-ovulacion.sel{border-color:#5AAA5A;background:#E8F8E8}
+.phase-lutea.sel{border-color:#8070C0;background:#EEE8F8}
+
+/* EXTRA ANIMALS BANK */
+.bank-section{margin-bottom:20px}
+.bank-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.bank-title::after{content:'';flex:1;height:.5px;background:var(--border)}
+.bank-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bank-animal{
+  background:var(--card);border:1.5px dashed var(--border);border-radius:16px;
+  padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:pointer;transition:all .2s;text-align:center;
+}
+.bank-animal:hover{border-color:var(--lila);background:var(--lila-l);transform:scale(1.03)}
+.bank-animal.added{border-style:solid;border-color:var(--sage);background:var(--sage-l)}
+.bank-emoji{font-size:32px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.1))}
+.bank-name{font-size:10px;font-weight:700;color:var(--text)}
+.bank-status{font-size:9px;color:var(--muted)}
+
+/* ADD ANIMAL MODAL */
+.add-animal-modal-overlay{
+  position:fixed;inset:0;background:rgba(44,31,14,.4);
+  display:none;align-items:flex-end;justify-content:center;z-index:300;
+}
+.add-animal-modal-overlay.open{display:flex}
+.add-animal-modal{
+  background:var(--cream);border-radius:24px 24px 0 0;
+  padding:24px 20px 36px;width:100%;max-width:480px;
+  animation:slideup .25s ease;
+}
+
+/* TASKS COLLAPSIBLE */
+.tasks-pending-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:8px;cursor:pointer;
+}
+.tasks-done-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 0;cursor:pointer;border-top:1px dashed var(--border);margin-top:6px;
+}
+.tasks-done-header-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tasks-arrow{font-size:11px;color:var(--muted);transition:transform .25s;display:inline-block}
+.tasks-arrow.open{transform:rotate(180deg)}
+.tasks-done-list{overflow:hidden;transition:max-height .3s ease;max-height:0}
+.tasks-done-list.open{max-height:600px}
+.task-item.done-style{opacity:.7}
+
+/* CYCLE PHASE TASK COLORS */
+.task-txt.done.phase-menstrual-done { text-decoration-color: #C04060; color: #C04060; opacity: .75; }
+.task-txt.done.phase-folicular-done { text-decoration-color: #3A8A3A; color: #3A8A3A; opacity: .75; }
+.task-txt.done.phase-ovulacion-done { text-decoration-color: #B8860A; color: #B8860A; opacity: .75; }
+.task-txt.done.phase-lutea-done     { text-decoration-color: #7A5030; color: #7A5030; opacity: .75; }
+.task-cb.done.phase-menstrual-done  { background:#C04060; border-color:#C04060; }
+.task-cb.done.phase-folicular-done  { background:#3A8A3A; border-color:#3A8A3A; }
+.task-cb.done.phase-ovulacion-done  { background:#B8860A; border-color:#B8860A; }
+.task-cb.done.phase-lutea-done      { background:#7A5030; border-color:#7A5030; }
+
+/* CYCLE CALENDAR */
+.cycle-calendar { margin-top: 14px; }
+.cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.cal-title { font-family:'Fraunces',serif; font-style:italic; font-size:15px; color:var(--text); }
+.cal-nav { width:28px; height:28px; border-radius:50%; border:1px solid var(--border); background:var(--warm); cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+.cal-day-label { font-size:8px; font-weight:700; text-align:center; color:var(--muted); padding:2px 0; text-transform:uppercase; }
+.cal-day {
+  aspect-ratio:1; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:600; cursor:pointer; transition:all .15s; position:relative;
+  color:var(--text);
+}
+.cal-day:hover { background:var(--cream2); }
+.cal-day.today { border:1.5px solid var(--lila); color:var(--lila); }
+.cal-day.period { background:#C04060; color:white; border-radius:50%; }
+.cal-day.period-pred { background:#F0C0CC; color:#7A1030; }
+.cal-day.ovulation-pred { background:#F0E0A0; color:#7A5800; }
+.cal-day.empty { cursor:default; }
+.cal-legend { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+.cal-legend-item { display:flex; align-items:center; gap:4px; font-size:9px; color:var(--muted); }
+.cal-legend-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.period-log-btn { width:100%; margin-top:10px; padding:8px; border:1px dashed #C04060; border-radius:10px; background:transparent; font-family:'Nunito',sans-serif; font-size:11px; color:#C04060; font-weight:700; cursor:pointer; }
+.period-log-btn:hover { background:#FDE8EC; }
+.period-history { margin-top:10px; }
+.period-history-title { font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.period-entry { display:flex; align-items:center; justify-content:space-between; padding:5px 8px; background:var(--warm); border:0.5px solid var(--border); border-radius:8px; margin-bottom:4px; }
+.period-entry-date { font-size:11px; color:var(--text); }
+.period-entry-del { font-size:10px; color:var(--muted); cursor:pointer; padding:2px 6px; }
+
+/* IMAGE MODAL */
+.img-modal-overlay{
+  position:fixed;inset:0;background:rgba(44,31,14,.5);
+  display:none;align-items:flex-end;justify-content:center;z-index:200;
+}
+.img-modal-overlay.open{display:flex}
+.img-modal{
+  background:var(--cream);border-radius:24px 24px 0 0;
+  padding:24px 20px 36px;width:100%;max-width:480px;
+  animation:slideup .25s ease;
+}
+
+/* MISC */
+.divider{height:1px;background:var(--border);margin:12px 0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+</head>
+<body>
+
+<h2 class="sr-only">Nuestro Jardín — app de bienestar compartido para Cosmos y Terra</h2>
+
+<!-- ══════ LOGIN SCREEN ══════ -->
+<div id="s-login" class="screen active">
+  <div class="login-bg"></div>
+  <div class="login-stars" id="stars"></div>
+  <div class="login-title">Nuestro Jardín ✦</div>
+  <div class="login-sub">el espacio de Cosmos y Terra</div>
+  <div class="login-card">
+    <div class="login-label">Contraseña</div>
+    <input class="login-input" type="password" id="pw-input" placeholder="escribe tu contraseña..." autocomplete="current-password">
+    <button class="login-btn btn-cosmos" onclick="tryLogin('cosmos')">Entrar como Cosmos ✦</button>
+    <button class="login-btn btn-terra" onclick="tryLogin('terra')">Entrar como Terra 🌿</button>
+    <div class="login-err" id="login-err"></div>
+    <div class="login-hint">Las contraseñas las configuras en el archivo<br>antes de publicar la app</div>
+  </div>
+</div>
+
+<!-- ══════ MAIN SCREEN ══════ -->
+<div id="s-main" class="screen">
+  <div class="topbar">
+    <div class="topbar-title" id="topbar-greeting">Jardín ✦</div>
+    <div class="topbar-user">
+      <div class="user-pill" id="user-pill"></div>
+      <div class="logout-btn" onclick="logout()">salir</div>
+    </div>
+  </div>
+
+  <div class="tabs" id="main-tabs">
+    <div class="tab active" onclick="switchTab('mi-jardin',this)">Mi jardín</div>
+    <div class="tab" onclick="switchTab('compartido',this)">Juntas 🐱🐱</div>
+    <div class="tab" onclick="switchTab('ella-jardin',this)" id="tab-ella">Ver jardín de ella</div>
+  </div>
+
+  <div class="content" id="main-content">
+  </div>
+</div>
+
+<!-- ══════ ADD BOARD ITEM MODAL ══════ -->
+<div class="modal-overlay" id="board-modal">
+  <div class="modal">
+    <div class="modal-title" id="board-modal-title">Añadir al tablero</div>
+    <div class="modal-tabs">
+      <div class="modal-tab active" onclick="selectModalTab('nota',this)">📝 Nota</div>
+      <div class="modal-tab" onclick="selectModalTab('link',this)">🔗 Link</div>
+      <div class="modal-tab" onclick="selectModalTab('imagen',this)">🖼 Imagen</div>
+    </div>
+    <div id="modal-nota">
+      <textarea class="modal-inp" id="nota-txt" rows="3" placeholder="escribe aquí..."></textarea>
+    </div>
+    <div id="modal-link" style="display:none">
+      <input class="modal-inp" id="link-url" placeholder="https://..." type="url">
+      <input class="modal-inp" id="link-title" placeholder="título o descripción (opcional)">
+    </div>
+    <div id="modal-imagen" style="display:none">
+      <input class="modal-inp" id="img-url" placeholder="URL de la imagen...">
+      <input class="modal-inp" id="img-caption" placeholder="descripción (opcional)">
+    </div>
+    <button class="modal-save" onclick="saveBoardItem()">Guardar ✦</button>
+    <button class="modal-cancel" onclick="closeBoardModal()">cancelar</button>
+  </div>
+</div>
+
+<!-- ══════ IMAGE CHANGE MODAL ══════ -->
+<div class="img-modal-overlay" id="img-modal">
+  <div class="img-modal">
+    <div class="modal-title">Cambiar imagen del animal</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6">Pega la URL de cualquier imagen (de Pinterest, Google, Midjourney...). La imagen se mostrará como fondo de la carta.</p>
+    <input class="modal-inp" id="new-img-url" placeholder="https://..." type="url">
+    <input class="modal-inp" id="new-img-credit" placeholder="Crédito / autor (opcional)">
+    <button class="modal-save" onclick="saveAnimalImg()">Guardar imagen ✦</button>
+    <button class="modal-cancel" onclick="closeImgModal()">cancelar</button>
+  </div>
+</div>
+
+<!-- ══════ BOTTOM NAV ══════ -->
+<div class="bottom-nav" id="bottom-nav" style="display:none">
+  <div class="nav-btn active" onclick="switchTab('mi-jardin',null,this)">
+    <div class="nav-icon">🌿</div>
+    <div class="nav-label">Mi jardín</div>
+  </div>
+  <div class="nav-btn" onclick="switchTab('compartido',null,this)">
+    <div class="nav-icon">🐱</div>
+    <div class="nav-label">Juntas</div>
+  </div>
+  <div class="nav-btn" onclick="switchTab('ella-jardin',null,this)">
+    <div class="nav-icon">✦</div>
+    <div class="nav-label">Ella</div>
+  </div>
+</div>
+
+<!-- ══════ ADD ANIMAL MODAL ══════ -->
+<div class="add-animal-modal-overlay" id="add-animal-modal">
+  <div class="add-animal-modal">
+    <div class="modal-title" id="add-animal-title">Añadir animal</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6">Dale un nombre y una categoría a este animal. Será tuyo para siempre.</p>
+    <div class="login-label">Nombre del animal</div>
+    <input class="modal-inp" id="new-animal-name" placeholder="ej. La nutria ahorradora...">
+    <div class="login-label">Categoría / descripción</div>
+    <input class="modal-inp" id="new-animal-cat" placeholder="ej. Finanzas · ahorro · inversión">
+    <div class="login-label">Frase inspiradora (opcional)</div>
+    <input class="modal-inp" id="new-animal-tagline" placeholder="ej. cada pequeño paso suma...">
+    <button class="modal-save" onclick="confirmAddAnimal()">Añadir a mi jardín ✦</button>
+    <button class="modal-cancel" onclick="closeAddAnimalModal()">cancelar</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG — CAMBIA LAS CONTRASEÑAS AQUÍ
+// ══════════════════════════════════════════
+const PASSWORDS = {
+  cosmos: 'chat',
+  terra: 'Terra'
+};
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let currentUser = null;
+let currentTab = 'mi-jardin';
+let currentBoardAnimal = null;
+let currentImgAnimal = null;
+let currentModalType = 'nota';
+
+const DEFAULT_STATE = () => ({
+  animals: {
+    caracol: { img: '', credit: '', mood: 2, tasks: ['Buscar pisos en idealista','Revisar presupuesto','Leer contrato de trabajo'], tasksDone: [], board: [] },
+    ballena: { img: '', credit: '', mood: 2, tasks: ['Escribir poema de la semana','Buscar sala de ensayo','Actualizar portfolio'], tasksDone: [], board: [] },
+    mariposa: { img: '', credit: '', mood: 2, tasks: ['Meditar 10 minutos','Escribir en el diario','Práctica de gratitud'], tasksDone: [], board: [] },
+    rana: { img: '', credit: '', mood: 2, tasks: ['Respiración consciente 5 min','Yoga o estiramiento','Caminar 20 min'], tasksDone: [], board: [] }
+  },
+  cycle: { phase: null, periodDates: [], calYear: null, calMonth: null }
+});
+
+function loadState(user) {
+  const raw = localStorage.getItem('jardin_' + user);
+  if (!raw) return DEFAULT_STATE();
+  try { return JSON.parse(raw); } catch(e) { return DEFAULT_STATE(); }
+}
+
+function saveState(user, state) {
+  localStorage.setItem('jardin_' + user, JSON.stringify(state));
+}
+
+function getState(user) {
+  if (user === 'cosmos') return cosmosState;
+  if (user === 'terra') return terraState;
+  return sharedState;
+}
+
+let cosmosState, terraState, sharedState;
+
+function initStates() {
+  cosmosState = loadState('cosmos');
+  terraState = loadState('terra');
+  sharedState = loadState('shared') || {
+    cats: { img: '', credit: '', board: [], journeys: [] }
+  };
+}
+
+// ══════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════
+function tryLogin(user) {
+  const pw = document.getElementById('pw-input').value.trim();
+  if (pw === PASSWORDS[user] || pw === '') {
+    if (pw === '') {
+      // dev mode: allow empty
+    } else if (pw !== PASSWORDS[user]) {
+      document.getElementById('login-err').textContent = 'Contraseña incorrecta ✦';
+      return;
+    }
+    currentUser = user;
+    document.getElementById('login-err').textContent = '';
+    document.getElementById('s-login').classList.remove('active');
+    document.getElementById('s-main').classList.add('active');
+    document.getElementById('bottom-nav').style.display = 'flex';
+    setupMain();
+  } else {
+    document.getElementById('login-err').textContent = 'Contraseña incorrecta ✦';
+  }
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById('s-main').classList.remove('active');
+  document.getElementById('bottom-nav').style.display = 'none';
+  document.getElementById('s-login').classList.add('active');
+  document.getElementById('pw-input').value = '';
+}
+
+// ══════════════════════════════════════════
+// MAIN SETUP
+// ══════════════════════════════════════════
+function setupMain() {
+  const isC = currentUser === 'cosmos';
+  document.getElementById('topbar-greeting').textContent = isC ? 'Jardín de Cosmos ✦' : 'Jardín de Terra 🌿';
+  const pill = document.getElementById('user-pill');
+  pill.textContent = isC ? '✦ Cosmos' : '🌿 Terra';
+  pill.className = 'user-pill ' + (isC ? 'pill-cosmos' : 'pill-terra');
+  const otherName = isC ? 'Terra' : 'Cosmos';
+  document.getElementById('tab-ella').textContent = 'Jardín de ' + otherName;
+  switchTab('mi-jardin');
+}
+
+// ══════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════
+function switchTab(tab, tabEl, navEl) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
+  if (tabEl) tabEl.classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  renderContent();
+}
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+const ANIMALS_CONFIG = {
+  caracol: { emoji: '🐌', name: 'El caracol de la estabilidad', cat: 'Estabilidad · trabajo · vivienda', color: '#C07850', tagline: 'con calma y constancia, construimos nuestro nido' },
+  ballena: { emoji: '🐋', name: 'La ballena artista', cat: 'Creativo · actuaciones · poesía · libros', color: '#5890B0', tagline: 'las profundidades guardan toda la belleza' },
+  mariposa: { emoji: '🦋', name: 'La mariposa espiritual', cat: 'Espiritual · estado emocional', color: '#A078B8', tagline: 'cada emoción es una transformación' },
+  rana: { emoji: '🐸', name: 'La rana con alas', cat: 'Cuerpo · respiración · movimiento', color: '#7A9E7E', tagline: 'el cuerpo también necesita volar' }
+};
+
+const EXTRA_ANIMALS_BANK = [
+  { key: 'nutria',  emoji: '🦦', defaultName: 'La nutria', defaultCat: 'Finanzas · ahorro', color: '#C8A840', tagline: 'guarda con cariño lo que importa' },
+  { key: 'aguila',  emoji: '🦅', defaultName: 'El águila', defaultCat: 'Visión · metas grandes', color: '#7A6050', tagline: 'desde las alturas todo se ve claro' },
+  { key: 'ardilla', emoji: '🐿', defaultName: 'La ardilla', defaultCat: 'Organización · pequeñas cosas', color: '#A87840', tagline: 'cada detalle tiene su lugar' },
+  { key: 'pez',     emoji: '🐠', defaultName: 'El pez', defaultCat: 'Fluidez · adaptación', color: '#5898C0', tagline: 'fluir es también una forma de avanzar' },
+  { key: 'koala',   emoji: '🐨', defaultName: 'El koala', defaultCat: 'Descanso · autocuidado', color: '#8898A8', tagline: 'descansar es un acto revolucionario' },
+  { key: 'panda',   emoji: '🐼', defaultName: 'El panda', defaultCat: 'Equilibrio · calma', color: '#6A7A6A', tagline: 'en la calma vive la fuerza' },
+];
+
+let pendingAddAnimal = null;
+
+const MOOD_FACES = [
+  { label: 'triste', path: '<circle cx="10" cy="10" r="8.5" fill="none" stroke="#B0A0C0" stroke-width="1.3"/><circle cx="7.5" cy="9" r="1.3" fill="#5A4A70"/><circle cx="12.5" cy="9" r="1.3" fill="#5A4A70"/><path d="M7 13.5 Q10 11 13 13.5" fill="none" stroke="#5A4A70" stroke-width="1.4" stroke-linecap="round"/><circle cx="6.5" cy="11.5" r="2" fill="#F0B0C0" opacity=".4"/><circle cx="13.5" cy="11.5" r="2" fill="#F0B0C0" opacity=".4"/>' },
+  { label: 'cansada', path: '<circle cx="10" cy="10" r="8.5" fill="none" stroke="#B0B8C0" stroke-width="1.3"/><path d="M6 8.5 Q7.5 7.5 9 8.5" fill="none" stroke="#4A5A6A" stroke-width="1.2" stroke-linecap="round"/><path d="M11 8.5 Q12.5 7.5 14 8.5" fill="none" stroke="#4A5A6A" stroke-width="1.2" stroke-linecap="round"/><line x1="7" y1="13" x2="13" y2="13" stroke="#4A5A6A" stroke-width="1.4" stroke-linecap="round"/><text x="14.5" y="6" font-size="4" fill="#90B0C8" font-family="sans-serif">z</text>' },
+  { label: 'ok', path: '<circle cx="10" cy="10" r="8.5" fill="none" stroke="#90B090" stroke-width="1.3"/><circle cx="7.5" cy="9" r="1.5" fill="#2A5A2A"/><circle cx="12.5" cy="9" r="1.5" fill="#2A5A2A"/><path d="M7.5 13 Q10 14.5 12.5 13" fill="none" stroke="#2A5A2A" stroke-width="1.4" stroke-linecap="round"/><circle cx="6" cy="11" r="2" fill="#F0C0A0" opacity=".45"/><circle cx="14" cy="11" r="2" fill="#F0C0A0" opacity=".45"/>' },
+  { label: 'contenta', path: '<circle cx="10" cy="10" r="8.5" fill="none" stroke="#6AAA6A" stroke-width="1.3"/><circle cx="7.5" cy="8.5" r="1.8" fill="#1A4A1A"/><circle cx="12.5" cy="8.5" r="1.8" fill="#1A4A1A"/><ellipse cx="9" cy="7.5" r="1" ry=".8" fill="white" opacity=".7"/><ellipse cx="14" cy="7.5" rx="1" ry=".8" fill="white" opacity=".7"/><path d="M6.5 12.5 Q10 16 13.5 12.5" fill="#A0D8A0" stroke="#1A5A1A" stroke-width="1.4" stroke-linecap="round"/><circle cx="5.5" cy="11" r="2.2" fill="#F4B0B8" opacity=".55"/><circle cx="14.5" cy="11" r="2.2" fill="#F4B0B8" opacity=".55"/>' },
+  { label: '¡radiante!', path: '<circle cx="10" cy="10" r="8.5" fill="#E8F8E8" stroke="#3A9A3A" stroke-width="1.3"/><circle cx="7.5" cy="8" r="2" fill="#0A3A0A"/><circle cx="12.5" cy="8" r="2" fill="#0A3A0A"/><ellipse cx="9" cy="7" rx="1.2" ry="1" fill="white" opacity=".8"/><ellipse cx="14" cy="7" rx="1.2" ry="1" fill="white" opacity=".8"/><path d="M6 12.5 Q10 17 14 12.5" fill="#7AC87A" stroke="#0A4A0A" stroke-width="1.6" stroke-linecap="round"/><circle cx="5" cy="10.5" r="2.5" fill="#F8B0C0" opacity=".65"/><circle cx="15" cy="10.5" r="2.5" fill="#F8B0C0" opacity=".65"/><circle cx="1.5" cy="4" r="1.2" fill="#FFE040" opacity=".8"/><circle cx="18.5" cy="3" r="1" fill="#FFE040" opacity=".7"/>' }
+];
+
+function renderContent() {
+  const el = document.getElementById('main-content');
+  el.innerHTML = '';
+
+  if (currentTab === 'mi-jardin') {
+    renderMyGarden(el);
+  } else if (currentTab === 'compartido') {
+    renderShared(el);
+  } else if (currentTab === 'ella-jardin') {
+    renderHerGarden(el);
+  }
+}
+
+function renderMyGarden(container) {
+  const state = getState(currentUser);
+  const coreOrder = ['caracol','ballena','mariposa','rana'];
+  const extraKeys = Object.keys(state.animals).filter(k => !coreOrder.includes(k));
+  [...coreOrder, ...extraKeys].forEach(key => {
+    if (state.animals[key]) container.appendChild(buildAnimalCard(key, state.animals[key], currentUser, false));
+  });
+  // Cycle card
+  container.appendChild(buildCycleCard(state, currentUser));
+  // Bank
+  container.appendChild(buildBankSection(state, currentUser));
+}
+
+function renderHerGarden(container) {
+  const other = currentUser === 'cosmos' ? 'terra' : 'cosmos';
+  const state = getState(other);
+  const otherName = other === 'cosmos' ? 'Cosmos' : 'Terra';
+
+  const banner = document.createElement('div');
+  banner.className = 'shared-banner';
+  banner.innerHTML = `<span style="font-size:28px">🌸</span><div class="shared-banner-text">Este es el jardín de <strong>${otherName}</strong>.<br>Puedes ver sus animales y su estado pero no su contenido privado.</div>`;
+  container.appendChild(banner);
+
+  const coreOrder = ['caracol','ballena','mariposa','rana'];
+  const extraKeys = Object.keys(state.animals).filter(k => !coreOrder.includes(k));
+  [...coreOrder, ...extraKeys].forEach(key => {
+    if (state.animals[key]) container.appendChild(buildAnimalCard(key, state.animals[key], other, true));
+  });
+
+  // Cycle visible
+  container.appendChild(buildCycleCard(state, other, true));
+}
+
+function renderShared(container) {
+  const banner = document.createElement('div');
+  banner.className = 'shared-banner';
+  banner.innerHTML = `<span style="font-size:32px">🐱🐱</span><div class="shared-banner-text">El rincón de Cosmos y Terra.<br>Los proyectos que construís juntas.</div>`;
+  container.appendChild(banner);
+
+  const card = document.createElement('div');
+  card.className = 'animal-card';
+
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'animal-img-wrap';
+  const img = sharedState.cats && sharedState.cats.img;
+  if (img) {
+    imgWrap.innerHTML = `<img src="${img}" alt="Los gatitos" onerror="this.style.display='none'">`;
+  } else {
+    imgWrap.innerHTML = `<div class="animal-img-placeholder"><div class="animal-emoji-big">🐱🐱</div><div style="font-size:11px;color:var(--muted)">toca para añadir imagen</div></div>`;
+  }
+  const ov = document.createElement('div');
+  ov.className = 'img-overlay';
+  ov.innerHTML = `<div class="img-cat-pill">Proyectos juntas</div><div class="img-change-btn" onclick="openImgModal('shared')">cambiar imagen</div>`;
+  imgWrap.appendChild(ov);
+  card.appendChild(imgWrap);
+
+  const body = document.createElement('div');
+  body.className = 'animal-body';
+  body.innerHTML = `<div class="animal-name">Los gatitos viajeros</div><div class="animal-tagline">los sueños compartidos florecen juntos ✦</div>`;
+
+  // Shared tasks
+  const tasksTitle = document.createElement('div');
+  tasksTitle.className = 'tasks-title';
+  tasksTitle.textContent = 'Tareas compartidas';
+  body.appendChild(tasksTitle);
+
+  sharedState.cats = sharedState.cats || {};
+  sharedState.cats.tasks = sharedState.cats.tasks || ['Planear próximo viaje','Buscar piso juntas','Organizar una cita especial'];
+  sharedState.cats.tasksDone = sharedState.cats.tasksDone || [];
+
+  const tasksList = document.createElement('div');
+  (sharedState.cats.tasks || []).forEach((t, i) => {
+    const isDone = (sharedState.cats.tasksDone || []).includes(i);
+    const item = document.createElement('div');
+    item.className = 'task-item';
+    item.innerHTML = `<div class="task-cb${isDone ? ' done' : ''}"></div><div class="task-txt${isDone ? ' done' : ''}">${t}</div>`;
+    item.onclick = () => {
+      const done = sharedState.cats.tasksDone || [];
+      const pos = done.indexOf(i);
+      if (pos === -1) done.push(i); else done.splice(pos, 1);
+      sharedState.cats.tasksDone = done;
+      saveState('shared', sharedState);
+      renderContent();
+    };
+    tasksList.appendChild(item);
+  });
+  body.appendChild(tasksList);
+
+  const addRow = document.createElement('div');
+  addRow.className = 'task-add-row';
+  addRow.innerHTML = `<input class="task-add-inp" placeholder="añadir tarea compartida..." id="task-inp-shared"><button class="task-add-btn" onclick="addSharedTask()">+ añadir</button>`;
+  body.appendChild(addRow);
+
+  // Shared board
+  const boardTitle = document.createElement('div');
+  boardTitle.className = 'board-title';
+  boardTitle.textContent = 'Tablero compartido · notas, links e imágenes';
+  body.appendChild(boardTitle);
+
+  const board = buildBoard('shared', sharedState.cats ? sharedState.cats.board || [] : [], 'shared');
+  body.appendChild(board);
+
+  card.appendChild(body);
+  container.appendChild(card);
+}
+
+function buildAnimalCard(key, animalData, owner, readonly) {
+  const cfg = ANIMALS_CONFIG[key];
+  const card = document.createElement('div');
+  card.className = 'animal-card';
+
+  // Image
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'animal-img-wrap';
+  if (animalData.img) {
+    imgWrap.innerHTML = `<img src="${animalData.img}" alt="${cfg.name}" onerror="this.parentElement.innerHTML='<div class=animal-img-placeholder><div class=animal-emoji-big>${cfg.emoji}</div></div>'">`;
+  } else {
+    imgWrap.innerHTML = `<div class="animal-img-placeholder"><div class="animal-emoji-big">${cfg.emoji}</div><div style="font-size:11px;color:var(--muted)">${readonly ? '' : 'toca para añadir imagen'}</div></div>`;
+  }
+  const ov = document.createElement('div');
+  ov.className = 'img-overlay';
+  ov.innerHTML = `<div class="img-cat-pill">${cfg.cat}</div>` + (!readonly ? `<div class="img-change-btn" onclick="openImgModal('${key}','${owner}')">cambiar imagen</div>` : '');
+  imgWrap.appendChild(ov);
+  card.appendChild(imgWrap);
+
+  const body = document.createElement('div');
+  body.className = 'animal-body';
+
+  // Header + mood
+  const header = document.createElement('div');
+  header.className = 'animal-header';
+  const titleBlock = document.createElement('div');
+  titleBlock.innerHTML = `<div class="animal-name">${cfg.name}</div><div class="animal-tagline">${cfg.tagline}</div>`;
+  header.appendChild(titleBlock);
+
+  if (!readonly) {
+    const moodWrap = document.createElement('div');
+    moodWrap.innerHTML = '<div style="font-size:9px;color:var(--muted);margin-bottom:4px;text-align:right">estado</div>';
+    const moodRow = document.createElement('div');
+    moodRow.className = 'mood-row';
+    MOOD_FACES.forEach((f,i) => {
+      const btn = document.createElement('div');
+      btn.className = 'mood-face' + (animalData.mood === i ? ' sel' : '');
+      btn.title = f.label;
+      btn.innerHTML = `<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">${f.path}</svg>`;
+      btn.onclick = () => { setMood(key, owner, i); };
+      moodRow.appendChild(btn);
+    });
+    moodWrap.appendChild(moodRow);
+    header.appendChild(moodWrap);
+  } else {
+    const moodWrap = document.createElement('div');
+    const mood = MOOD_FACES[animalData.mood] || MOOD_FACES[2];
+    moodWrap.innerHTML = `<div style="font-size:9px;color:var(--muted);margin-bottom:4px">estado</div><div style="display:flex;align-items:center;gap:4px"><svg width="24" height="24" viewBox="0 0 20 20">${mood.path}</svg><span style="font-size:10px;color:var(--muted)">${mood.label}</span></div>`;
+    header.appendChild(moodWrap);
+  }
+  body.appendChild(header);
+
+  // Progress
+  const done = animalData.tasksDone ? animalData.tasksDone.length : 0;
+  const total = animalData.tasks ? animalData.tasks.length : 0;
+  const pct = total > 0 ? Math.round(done/total*100) : 0;
+  const progRow = document.createElement('div');
+  progRow.className = 'prog-row';
+  progRow.innerHTML = `<span class="prog-label">tareas</span><div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${cfg.color}"></div></div><span class="prog-label">${done}/${total}</span>`;
+  body.appendChild(progRow);
+
+  if (!readonly) {
+    // Tasks — pending (max 5 visible) + done collapsible
+    const tasksTitle = document.createElement('div');
+    tasksTitle.className = 'tasks-title';
+    tasksTitle.textContent = 'Tareas pendientes';
+    body.appendChild(tasksTitle);
+
+    const allTasks = animalData.tasks || [];
+    const donePending = animalData.tasksDone || [];
+    const pendingIdxs = allTasks.map((_,i)=>i).filter(i => !donePending.includes(i));
+    const doneIdxs = allTasks.map((_,i)=>i).filter(i => donePending.includes(i));
+
+    // Pending list — max 5 visible
+    const pendingList = document.createElement('div');
+    const visible = pendingIdxs.slice(0,5);
+    const hidden = pendingIdxs.slice(5);
+    visible.forEach(i => {
+      pendingList.appendChild(makeTaskItem(allTasks[i], i, key, owner, false));
+    });
+    body.appendChild(pendingList);
+
+    // If more than 5 pending — show count
+    if (hidden.length > 0) {
+      const more = document.createElement('div');
+      more.style.cssText = 'font-size:10px;color:var(--muted);padding:4px 10px;';
+      more.textContent = `+ ${hidden.length} tareas más pendientes`;
+      body.appendChild(more);
+    }
+
+    // Done tasks — collapsible
+    if (doneIdxs.length > 0) {
+      const doneToggleId = `done-${key}-${owner}`;
+      const doneHeader = document.createElement('div');
+      doneHeader.className = 'tasks-done-header';
+      doneHeader.innerHTML = `<span class="tasks-done-header-label">✓ Realizadas (${doneIdxs.length})</span><span class="tasks-arrow" id="arr-${doneToggleId}">▼</span>`;
+      doneHeader.onclick = () => {
+        const list = document.getElementById(doneToggleId);
+        const arr = document.getElementById('arr-' + doneToggleId);
+        list.classList.toggle('open');
+        arr.classList.toggle('open');
+      };
+      body.appendChild(doneHeader);
+
+      const doneList = document.createElement('div');
+      doneList.className = 'tasks-done-list';
+      doneList.id = doneToggleId;
+      doneIdxs.forEach(i => {
+        doneList.appendChild(makeTaskItem(allTasks[i], i, key, owner, true));
+      });
+      body.appendChild(doneList);
+    }
+
+    const addRow = document.createElement('div');
+    addRow.className = 'task-add-row';
+    addRow.innerHTML = `<input class="task-add-inp" placeholder="añadir tarea..." id="task-inp-${key}"><button class="task-add-btn" onclick="addTask('${key}','${owner}')">+ añadir</button>`;
+    body.appendChild(addRow);
+
+    // Board
+    const bTitle = document.createElement('div');
+    bTitle.className = 'board-title';
+    bTitle.textContent = 'Tablero · notas, links e imágenes';
+    body.appendChild(bTitle);
+    body.appendChild(buildBoard(key, animalData.board || [], owner));
+  }
+
+  if (animalData.credit) {
+    const cred = document.createElement('div');
+    cred.style.cssText = 'font-size:8px;color:var(--muted);text-align:center;margin-top:10px;padding:0 4px;line-height:1.5';
+    cred.textContent = '📷 ' + animalData.credit + ' · uso personal, sin fines comerciales';
+    body.appendChild(cred);
+  }
+
+  card.appendChild(body);
+  return card;
+}
+
+function buildCycleCard(state, owner, readonly) {
+  const card = document.createElement('div');
+  card.className = 'cycle-card';
+  const body = document.createElement('div');
+  body.className = 'cycle-body';
+
+  const phases = [
+    { id:'menstrual', icon:'🌑', name:'Menstrual', desc:'Descanso, introspección, renovación. El cuerpo pide calma.', cls:'phase-menstrual' },
+    { id:'folicular', icon:'🌱', name:'Folicular', desc:'Energía nueva, creatividad, buenos días para empezar cosas.', cls:'phase-folicular' },
+    { id:'ovulacion', icon:'🌕', name:'Ovulación', desc:'Pico de energía y magnetismo. Momento de conectar.', cls:'phase-ovulacion' },
+    { id:'lutea', icon:'🍂', name:'Lútea', desc:'Introspección, intuición, honra lo que sientes.', cls:'phase-lutea' }
+  ];
+
+  const name = owner === 'cosmos' ? 'Cosmos' : 'Terra';
+  body.innerHTML = `<div class="animal-emoji-big" style="font-size:40px;text-align:center;margin-bottom:8px;animation:float 4s ease-in-out infinite">🌙</div><div class="cycle-title">Ciclo de ${name}</div><div style="font-size:11px;color:var(--muted);margin-bottom:4px">${readonly ? 'fase actual' : 'selecciona tu fase actual'}</div>`;
+
+  const grid = document.createElement('div');
+  grid.className = 'cycle-phases';
+  phases.forEach(p => {
+    const btn = document.createElement('div');
+    btn.className = `phase-btn ${p.cls}${state.cycle && state.cycle.phase === p.id ? ' sel' : ''}`;
+    btn.innerHTML = `<div class="phase-icon">${p.icon}</div><div class="phase-name">${p.name}</div><div class="phase-desc">${p.desc}</div>`;
+    if (!readonly) btn.onclick = () => setCyclePhase(owner, p.id);
+    grid.appendChild(btn);
+  });
+  body.appendChild(grid);
+
+  // Auto-phase label
+  if (!readonly) {
+    // Run auto-calc on load too
+    const autoPhase = calcPhaseFromDates(state);
+    if (autoPhase && state.cycle.phase !== autoPhase) {
+      state.cycle.phase = autoPhase;
+      saveState(owner, state);
+      // Update selected button
+      grid.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('sel'));
+      const sel = grid.querySelector('.phase-' + autoPhase);
+      if (sel) sel.classList.add('sel');
+    }
+    const autoLbl = document.createElement('div');
+    autoLbl.className = 'auto-phase-label';
+    autoLbl.style.cssText = 'font-size:9px;color:var(--sage-d);text-align:center;margin-top:6px;font-weight:700;min-height:14px';
+    autoLbl.textContent = autoPhase ? '✦ Fase calculada automáticamente desde tu calendario' : 'Puedes seleccionar tu fase manualmente o marcar días de regla arriba';
+    body.appendChild(autoLbl);
+  }
+
+  // CALENDAR
+  const calWrap = document.createElement('div');
+  calWrap.className = 'cycle-calendar';
+
+  const today = new Date();
+  state.cycle = state.cycle || {};
+  state.cycle.periodDates = state.cycle.periodDates || [];
+
+  // Use stored nav month or default to today
+  let calYear  = state.cycle.calYear  || today.getFullYear();
+  let calMonth = state.cycle.calMonth || today.getMonth();
+
+  function renderCal() {
+    calWrap.innerHTML = '';
+
+    const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const DAYS_ES = ['L','M','X','J','V','S','D'];
+
+    // Header
+    const hdr = document.createElement('div');
+    hdr.className = 'cal-header';
+    const prevBtn = document.createElement('div');
+    prevBtn.className = 'cal-nav';
+    prevBtn.textContent = '‹';
+    prevBtn.onclick = () => {
+      calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+      state.cycle.calYear = calYear; state.cycle.calMonth = calMonth;
+      saveState(owner, state); renderCal();
+    };
+    const nextBtn = document.createElement('div');
+    nextBtn.className = 'cal-nav';
+    nextBtn.textContent = '›';
+    nextBtn.onclick = () => {
+      calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+      state.cycle.calYear = calYear; state.cycle.calMonth = calMonth;
+      saveState(owner, state); renderCal();
+    };
+    const calTitle = document.createElement('div');
+    calTitle.className = 'cal-title';
+    calTitle.textContent = MONTHS_ES[calMonth] + ' ' + calYear;
+    hdr.appendChild(prevBtn); hdr.appendChild(calTitle); hdr.appendChild(nextBtn);
+    calWrap.appendChild(hdr);
+
+    // Build set of period date strings for quick lookup
+    const periodSet = new Set(state.cycle.periodDates || []);
+
+    // Predict next periods based on last known period (28-day cycle)
+    const predSet = new Set();
+    const ovulSet = new Set();
+    if (state.cycle.periodDates && state.cycle.periodDates.length > 0) {
+      const sorted = [...state.cycle.periodDates].sort();
+      const lastDate = new Date(sorted[sorted.length - 1] + 'T12:00:00');
+      // Generate predictions for 6 months ahead and show 5 days of period
+      for (let cycle = 1; cycle <= 6; cycle++) {
+        for (let d = 0; d < 5; d++) {
+          const pred = new Date(lastDate);
+          pred.setDate(pred.getDate() + cycle * 28 + d);
+          predSet.add(pred.toISOString().slice(0,10));
+        }
+        // Ovulation ~14 days after period start
+        const ovul = new Date(lastDate);
+        ovul.setDate(ovul.getDate() + cycle * 28 + 14);
+        for (let d = -1; d <= 1; d++) {
+          const o = new Date(ovul); o.setDate(o.getDate() + d);
+          ovulSet.add(o.toISOString().slice(0,10));
+        }
+      }
+    }
+
+    // Day labels
+    const labelsRow = document.createElement('div');
+    labelsRow.className = 'cal-grid';
+    DAYS_ES.forEach(d => {
+      const lbl = document.createElement('div');
+      lbl.className = 'cal-day-label';
+      lbl.textContent = d;
+      labelsRow.appendChild(lbl);
+    });
+    calWrap.appendChild(labelsRow);
+
+    // Days grid
+    const daysGrid = document.createElement('div');
+    daysGrid.className = 'cal-grid';
+
+    const firstDay = new Date(calYear, calMonth, 1);
+    // Monday=0 offset
+    let startOffset = (firstDay.getDay() + 6) % 7;
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+    for (let i = 0; i < startOffset; i++) {
+      const empty = document.createElement('div');
+      empty.className = 'cal-day empty';
+      daysGrid.appendChild(empty);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const isToday = dateStr === today.toISOString().slice(0,10);
+      const isPeriod = periodSet.has(dateStr);
+      const isPred = !isPeriod && predSet.has(dateStr);
+      const isOvul = !isPeriod && !isPred && ovulSet.has(dateStr);
+
+      const dayEl = document.createElement('div');
+      let cls = 'cal-day';
+      if (isToday) cls += ' today';
+      if (isPeriod) cls += ' period';
+      else if (isPred) cls += ' period-pred';
+      else if (isOvul) cls += ' ovulation-pred';
+      dayEl.className = cls;
+      dayEl.textContent = d;
+
+      if (!readonly) {
+        dayEl.onclick = () => {
+          if (periodSet.has(dateStr)) {
+            periodSet.delete(dateStr);
+            state.cycle.periodDates = state.cycle.periodDates.filter(x => x !== dateStr);
+          } else {
+            periodSet.add(dateStr);
+            state.cycle.periodDates = state.cycle.periodDates || [];
+            state.cycle.periodDates.push(dateStr);
+            state.cycle.periodDates.sort();
+          }
+          // Auto-calculate phase from dates
+          const autoPhase = calcPhaseFromDates(state);
+          if (autoPhase) state.cycle.phase = autoPhase;
+          saveState(owner, state);
+          renderCal();
+          renderHistorySection();
+          // Refresh phase buttons
+          card.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('sel'));
+          if (autoPhase) {
+            const sel = card.querySelector('.phase-' + autoPhase);
+            if (sel) sel.classList.add('sel');
+          }
+          // Refresh auto-phase label
+          const autoLbl = card.querySelector('.auto-phase-label');
+          if (autoLbl) autoLbl.textContent = autoPhase ? '✦ Fase calculada automáticamente' : '';
+        };
+      }
+      daysGrid.appendChild(dayEl);
+    }
+    calWrap.appendChild(daysGrid);
+
+    // Legend
+    const legend = document.createElement('div');
+    legend.className = 'cal-legend';
+    legend.innerHTML = `
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#C04060"></div>Regla</div>
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#F0C0CC"></div>Predicción regla</div>
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#F0E0A0"></div>Posible ovulación</div>
+    `;
+    calWrap.appendChild(legend);
+
+    if (!readonly) {
+      const hint = document.createElement('div');
+      hint.style.cssText = 'font-size:9px;color:var(--muted);margin-top:6px;text-align:center';
+      hint.textContent = 'Toca cualquier día para marcar/desmarcar el inicio de la regla';
+      calWrap.appendChild(hint);
+    }
+  }
+
+  function renderHistorySection() {
+    let histEl = calWrap.querySelector('.period-history');
+    if (histEl) histEl.remove();
+
+    const dates = (state.cycle.periodDates || []).slice().sort().reverse();
+    if (dates.length === 0) return;
+
+    const hist = document.createElement('div');
+    hist.className = 'period-history';
+    const htitle = document.createElement('div');
+    htitle.className = 'period-history-title';
+    htitle.textContent = 'Historial de reglas';
+    hist.appendChild(htitle);
+
+    // Group consecutive dates into periods
+    const groups = [];
+    let group = [dates[dates.length-1]];
+    for (let i = dates.length-2; i >= 0; i--) {
+      const prev = new Date(group[group.length-1]+'T12:00:00');
+      const curr = new Date(dates[i]+'T12:00:00');
+      const diff = (curr - prev) / 86400000;
+      if (diff <= 1) { group.push(dates[i]); }
+      else { groups.push([...group]); group = [dates[i]]; }
+    }
+    groups.push(group);
+
+    groups.reverse().slice(-6).reverse().forEach(g => {
+      const start = g[0];
+      const entry = document.createElement('div');
+      entry.className = 'period-entry';
+      const fmt = (s) => { const d=new Date(s+'T12:00:00'); return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear(); };
+      entry.innerHTML = `<span class="period-entry-date">🌑 ${fmt(start)} · ${g.length} día${g.length>1?'s':''}</span>`;
+      if (!readonly) {
+        const del = document.createElement('span');
+        del.className = 'period-entry-del';
+        del.textContent = '✕';
+        del.title = 'Eliminar este período';
+        del.onclick = () => {
+          state.cycle.periodDates = (state.cycle.periodDates||[]).filter(d => !g.includes(d));
+          saveState(owner, state);
+          renderCal();
+          renderHistorySection();
+        };
+        entry.appendChild(del);
+      }
+      hist.appendChild(entry);
+    });
+
+    calWrap.appendChild(hist);
+  }
+
+  renderCal();
+  renderHistorySection();
+  body.appendChild(calWrap);
+  card.appendChild(body);
+  return card;
+}
+
+function buildBoard(key, items, owner) {
+  const grid = document.createElement('div');
+  grid.className = 'board-grid';
+
+  items.forEach((item, idx) => {
+    const bc = document.createElement('div');
+    bc.className = 'board-card';
+    let inner = '';
+    if (item.type === 'imagen' && item.url) {
+      inner += `<img class="board-card-img" src="${item.url}" alt="${item.caption||''}" onerror="this.style.display='none'">`;
+    }
+    inner += `<div class="board-card-body"><div class="board-card-type">${item.type}</div>`;
+    if (item.text) inner += `<div class="board-card-text">${item.text}</div>`;
+    if (item.url && item.type !== 'imagen') inner += `<a href="${item.url}" target="_blank" class="board-card-link">${item.title || item.url}</a>`;
+    if (item.caption && item.type === 'imagen') inner += `<div class="board-card-text">${item.caption}</div>`;
+    inner += '</div>';
+    if (owner) inner += `<div class="board-card-del" onclick="delBoardItem('${key}','${owner}',${idx})">✕</div>`;
+    bc.innerHTML = inner;
+    grid.appendChild(bc);
+  });
+
+  if (owner) {
+    const addBtn = document.createElement('div');
+    addBtn.className = 'board-add-btn';
+    addBtn.innerHTML = `<div class="board-add-icon">+</div><div>añadir</div>`;
+    addBtn.onclick = () => openBoardModal(key, owner);
+    grid.appendChild(addBtn);
+  }
+
+  return grid;
+}
+
+// ══════════════════════════════════════════
+// ACTIONS
+// ══════════════════════════════════════════
+function getPhaseClass(owner) {
+  const state = getState(owner);
+  const phase = state && state.cycle && state.cycle.phase;
+  if (!phase) return '';
+  return 'phase-' + phase + '-done';
+}
+
+function makeTaskItem(text, idx, key, owner, isDone) {
+  const item = document.createElement('div');
+  item.className = 'task-item' + (isDone ? ' done-style' : '');
+  const phaseClass = isDone ? getPhaseClass(owner) : '';
+  item.innerHTML = `<div class="task-cb${isDone?' done':''}${phaseClass?' '+phaseClass:''}"></div><div class="task-txt${isDone?' done':''}${phaseClass?' '+phaseClass:''}">${text}</div>`;
+  item.onclick = () => toggleTask(key, owner, idx);
+  return item;
+}
+
+// ══════════════════════════════════════════
+// BANK OF ANIMALS
+// ══════════════════════════════════════════
+function buildBankSection(state, owner) {
+  const activeKeys = Object.keys(state.animals);
+  const section = document.createElement('div');
+  section.className = 'bank-section';
+
+  const title = document.createElement('div');
+  title.className = 'bank-title';
+  title.textContent = 'Añadir nuevo animal';
+  section.appendChild(title);
+
+  const grid = document.createElement('div');
+  grid.className = 'bank-grid';
+
+  EXTRA_ANIMALS_BANK.forEach(a => {
+    const isAdded = activeKeys.includes(a.key);
+    const card = document.createElement('div');
+    card.className = 'bank-animal' + (isAdded ? ' added' : '');
+    card.innerHTML = `<div class="bank-emoji">${a.emoji}</div><div class="bank-name">${a.defaultName}</div><div class="bank-status">${isAdded ? '✓ en tu jardín' : 'toca para añadir'}</div>`;
+    if (!isAdded) card.onclick = () => openAddAnimalModal(a, owner);
+    grid.appendChild(card);
+  });
+
+  section.appendChild(grid);
+  return section;
+}
+
+function openAddAnimalModal(animalDef, owner) {
+  pendingAddAnimal = { def: animalDef, owner };
+  document.getElementById('add-animal-title').textContent = `Añadir ${animalDef.emoji} ${animalDef.defaultName}`;
+  document.getElementById('new-animal-name').value = animalDef.defaultName;
+  document.getElementById('new-animal-cat').value = animalDef.defaultCat;
+  document.getElementById('new-animal-tagline').value = animalDef.tagline;
+  document.getElementById('add-animal-modal').classList.add('open');
+}
+
+function closeAddAnimalModal() {
+  document.getElementById('add-animal-modal').classList.remove('open');
+  pendingAddAnimal = null;
+}
+
+function confirmAddAnimal() {
+  if (!pendingAddAnimal) return;
+  const { def, owner } = pendingAddAnimal;
+  const name = document.getElementById('new-animal-name').value.trim() || def.defaultName;
+  const cat = document.getElementById('new-animal-cat').value.trim() || def.defaultCat;
+  const tagline = document.getElementById('new-animal-tagline').value.trim() || def.tagline;
+
+  // Add to ANIMALS_CONFIG dynamically
+  ANIMALS_CONFIG[def.key] = { emoji: def.emoji, name, cat, color: def.color, tagline };
+
+  // Add to user state
+  const state = getState(owner);
+  state.animals[def.key] = { img: '', credit: '', mood: 2, tasks: [], tasksDone: [], board: [] };
+  saveState(owner, state);
+
+  closeAddAnimalModal();
+  renderContent();
+}
+
+document.getElementById('add-animal-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeAddAnimalModal();
+});
+
+function setMood(key, owner, mood) {
+  const state = getState(owner);
+  state.animals[key].mood = mood;
+  saveState(owner, state);
+  renderContent();
+}
+
+function toggleTask(key, owner, idx) {
+  const state = getState(owner);
+  const done = state.animals[key].tasksDone || [];
+  const pos = done.indexOf(idx);
+  if (pos === -1) done.push(idx); else done.splice(pos,1);
+  state.animals[key].tasksDone = done;
+  saveState(owner, state);
+  renderContent();
+}
+
+function addTask(key, owner) {
+  const inp = document.getElementById('task-inp-' + key);
+  if (!inp || !inp.value.trim()) return;
+  const state = getState(owner);
+  state.animals[key].tasks = state.animals[key].tasks || [];
+  state.animals[key].tasks.push(inp.value.trim());
+  saveState(owner, state);
+  renderContent();
+}
+
+function addSharedTask() {
+  const inp = document.getElementById('task-inp-shared');
+  if (!inp || !inp.value.trim()) return;
+  sharedState.cats = sharedState.cats || {};
+  sharedState.cats.tasks = sharedState.cats.tasks || [];
+  sharedState.cats.tasks.push(inp.value.trim());
+  saveState('shared', sharedState);
+  renderContent();
+}
+
+function calcPhaseFromDates(state) {
+  const dates = (state.cycle.periodDates || []).slice().sort();
+  if (dates.length === 0) return null;
+
+  // Find the most recent period START (first day of the last group)
+  let lastStart = dates[0];
+  for (let i = 1; i < dates.length; i++) {
+    const prev = new Date(dates[i-1] + 'T12:00:00');
+    const curr = new Date(dates[i] + 'T12:00:00');
+    const diff = (curr - prev) / 86400000;
+    if (diff > 2) lastStart = dates[i]; // gap > 2 days = new cycle
+  }
+
+  const start = new Date(lastStart + 'T12:00:00');
+  const today = new Date();
+  today.setHours(12,0,0,0);
+  const dayOfCycle = Math.floor((today - start) / 86400000) + 1;
+
+  if (dayOfCycle < 1) return null;
+  const d = ((dayOfCycle - 1) % 28) + 1; // wrap at 28
+  if (d <= 5)  return 'menstrual';
+  if (d <= 13) return 'folicular';
+  if (d <= 17) return 'ovulacion';
+  return 'lutea';
+}
+
+function setCyclePhase(owner, phase) {
+  const state = getState(owner);
+  state.cycle = state.cycle || {};
+  state.cycle.phase = phase;
+  saveState(owner, state);
+  renderContent();
+}
+
+// BOARD MODAL
+function openBoardModal(key, owner) {
+  currentBoardAnimal = { key, owner };
+  currentModalType = 'nota';
+  document.getElementById('board-modal-title').textContent = key === 'shared' ? 'Añadir al tablero compartido' : 'Añadir a ' + (ANIMALS_CONFIG[key] ? ANIMALS_CONFIG[key].name : 'tablero');
+  document.getElementById('nota-txt').value = '';
+  document.getElementById('link-url').value = '';
+  document.getElementById('link-title').value = '';
+  document.getElementById('img-url').value = '';
+  document.getElementById('img-caption').value = '';
+  selectModalTab('nota', document.querySelector('.modal-tab'));
+  document.getElementById('board-modal').classList.add('open');
+}
+
+function closeBoardModal() {
+  document.getElementById('board-modal').classList.remove('open');
+  currentBoardAnimal = null;
+}
+
+function selectModalTab(type, el) {
+  currentModalType = type;
+  document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('modal-nota').style.display = type === 'nota' ? 'block' : 'none';
+  document.getElementById('modal-link').style.display = type === 'link' ? 'block' : 'none';
+  document.getElementById('modal-imagen').style.display = type === 'imagen' ? 'block' : 'none';
+}
+
+function saveBoardItem() {
+  if (!currentBoardAnimal) return;
+  const { key, owner } = currentBoardAnimal;
+  let item = { type: currentModalType };
+
+  if (currentModalType === 'nota') {
+    const txt = document.getElementById('nota-txt').value.trim();
+    if (!txt) return;
+    item.text = txt;
+  } else if (currentModalType === 'link') {
+    const url = document.getElementById('link-url').value.trim();
+    if (!url) return;
+    item.url = url;
+    item.title = document.getElementById('link-title').value.trim();
+  } else if (currentModalType === 'imagen') {
+    const url = document.getElementById('img-url').value.trim();
+    if (!url) return;
+    item.url = url;
+    item.caption = document.getElementById('img-caption').value.trim();
+  }
+
+  if (key === 'shared' || owner === 'shared') {
+    sharedState.cats = sharedState.cats || {};
+    sharedState.cats.board = sharedState.cats.board || [];
+    sharedState.cats.board.push(item);
+    saveState('shared', sharedState);
+  } else {
+    const state = getState(owner);
+    state.animals[key].board = state.animals[key].board || [];
+    state.animals[key].board.push(item);
+    saveState(owner, state);
+  }
+
+  closeBoardModal();
+  renderContent();
+}
+
+function delBoardItem(key, owner, idx) {
+  if (key === 'shared' || owner === 'shared') {
+    sharedState.cats.board.splice(idx, 1);
+    saveState('shared', sharedState);
+  } else {
+    const state = getState(owner);
+    state.animals[key].board.splice(idx, 1);
+    saveState(owner, state);
+  }
+  renderContent();
+}
+
+// IMAGE MODAL
+function openImgModal(key, owner) {
+  currentImgAnimal = { key, owner: owner || 'shared' };
+  document.getElementById('new-img-url').value = '';
+  document.getElementById('new-img-credit').value = '';
+  document.getElementById('img-modal').classList.add('open');
+}
+
+function closeImgModal() {
+  document.getElementById('img-modal').classList.remove('open');
+  currentImgAnimal = null;
+}
+
+function saveAnimalImg() {
+  if (!currentImgAnimal) return;
+  const { key, owner } = currentImgAnimal;
+  const url = document.getElementById('new-img-url').value.trim();
+  const credit = document.getElementById('new-img-credit').value.trim();
+  if (!url) return;
+
+  if (key === 'shared') {
+    sharedState.cats = sharedState.cats || {};
+    sharedState.cats.img = url;
+    sharedState.cats.credit = credit;
+    saveState('shared', sharedState);
+  } else {
+    const state = getState(owner);
+    state.animals[key].img = url;
+    state.animals[key].credit = credit;
+    saveState(owner, state);
+  }
+
+  closeImgModal();
+  renderContent();
+}
+
+// Click outside modal to close
+document.getElementById('board-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeBoardModal();
+});
+document.getElementById('img-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeImgModal();
+});
+
+// ══════════════════════════════════════════
+// STARS
+// ══════════════════════════════════════════
+function createStars() {
+  const c = document.getElementById('stars');
+  for (let i = 0; i < 18; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random()*100 + '%';
+    s.style.top = Math.random()*100 + '%';
+    s.style.setProperty('--d', (2.5 + Math.random()*3) + 's');
+    s.style.setProperty('--delay', (-Math.random()*4) + 's');
+    s.style.width = s.style.height = (3 + Math.random()*3) + 'px';
+    c.appendChild(s);
+  }
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+initStates();
+createStars();
+</script>
+</body>
+</html>
